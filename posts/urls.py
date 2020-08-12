@@ -1,10 +1,13 @@
 from django.urls import path
-from posts.views import posts_home, PostDetailView, category_view
+from posts.views import posts_home, PostDetailView, category_view, login_view, register_view, logout_view, PostUpdateView
 
 
 urlpatterns = [
     path('', posts_home, name='home'),
     path('posts/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
+    path('posts/<int:pk>/edit', PostUpdateView.as_view(), name='post-update'),
     path('security/', category_view, name='category'),
-
+    path('login/', login_view, name="user-login"),
+    path('register/', register_view, name="user-register"),
+    path('logout/', logout_view, name="user-logout")
 ]

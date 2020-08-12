@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>Callie HTML Template</title>
+    <title>Tides - Programming</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CMuli:400,700" rel="stylesheet">
@@ -55,7 +55,11 @@
 
                     <!-- search & aside toggle -->
                     <div class="nav-btns">
+                        {% if request.user.is_authenticated %}
+                        <span>Hello <i>{{ request.user.username }}</i>, <a style="color:red;" href="/logout/">Logout</a></span>
+                        {% else %}
                         <i><a href="/login/">Login / Sign Up</a></i>
+                        {% endif %}
                         <button class="search-btn"><i class="fa fa-search"></i></button>
                         <div id="nav-search">
                             <form>
