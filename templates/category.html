@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_header %}
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="page-header-bg" style="background-image: url('{% static 'img/header-2.jpg' %}'); background-position: 0% 0%;" data-stellar-background-ratio="0.5"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10 text-center">
+                <h1 class="text-uppercase">Lifestyle</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /PAGE HEADER -->
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-8">
+    <!-- post -->
+    <div class="post post-thumb">
+        <a class="post-img" href="{{ hot_post.get_absolute_url }}"><img src="{{ hot_post.image.url }}" alt=""></a>
+        <div class="post-body">
+            <div class="post-category">
+                <a href="category.html">Fashion</a>
+                <a href="category.html">Lifestyle</a>
+            </div>
+            <h3 class="post-title title-lg"><a href="{{ hot_post.get_absolute_url }}">{{ hot_post.title }}</a></h3>
+            <ul class="post-meta">
+                <li><a href="author.html">{{ hot_post.author }}</a></li>
+                <li>{{ hot_post.created_at }}</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /post -->
+
+    <div class="row">
+        {% for post in recent_posts %}
+        <!-- post -->
+        <div class="col-md-6">
+            <div class="post">
+                <a class="post-img" href="blog-post.html"><img src="{{ post.image.url }}" alt=""></a>
+                <div class="post-body">
+                    <div class="post-category">
+                        <a href="{{ post.category }}">{{ post.category }}</a>
+                    </div>
+                    <h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <ul class="post-meta">
+                        <li><a href="author.html">{{ post.author }}</a></li>
+                        <li>{{ post.created_at }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% if forloop.counter == 2 %}
+        <div class="clearfix visible-md visible-lg"></div>
+        {% endif %}
+		<!-- /post -->
+		{% endfor %}
+    </div>
+
+    {% for post in recent_posts %}
+    <!-- post -->
+    <div class="post post-row">
+        <a class="post-img" href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" alt=""></a>
+        <div class="post-body">
+            <div class="post-category">
+                <a href="category.html">{{ post.category }}</a>
+            </div>
+            <h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+            <ul class="post-meta">
+                <li><a href="author.html">{{ post.author }}</a></li>
+                <li>{{ post.created_at }}</li>
+            </ul>
+            <p>{{ post.body|linebreaks|truncatechars:160 }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    <!-- /post -->
+
+    <div class="section-row loadmore text-center">
+        <a href="#" class="primary-button">Load More</a>
+    </div>
+</div>
+
+{% endblock content %}
