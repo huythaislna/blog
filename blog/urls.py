@@ -19,9 +19,22 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from rest_auth.registration.views import SocialLoginView
+from rest_framework_jwt.views import obtain_jwt_token
+
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
 urlpatterns = [
+    path('api-token-auth/', obtain_jwt_token),
+    path('rest-auth/facebook/', FacebookLogin.as_view(), name='facebook_login_by_token'),
     path('admin/', admin.site.urls),
     path('', include("posts.urls")),
+    path('api/', include('posts.api.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('rest-auth/', include('rest_auth.urls')),
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('accounts/',include('allauth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -10,6 +10,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
+                //"runserver_plus",
+                //"--cert-file",
+                //"/tmp/cert",
                 "runserver",
                 "--noreload"
             ],

@@ -37,10 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'whitenoise.runserver_nostatic',
+    'rest_framework',
+    'rest_framework.authtoken',
     'posts',
     'ckeditor',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -81,7 +91,7 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -133,3 +143,22 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 ALLOWED_HOSTS = ['*']
 
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+
+LOGIN_REDIRECT_URL = "/" 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ]
+}
+
+SITE_ID = 1
+#REST_USE_JWT = True

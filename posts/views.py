@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, CreateView, DeleteView
 from posts.models import Post
 from posts.forms import UserModelForm, UserRegisterForm, PostUpdateForm
 from django.contrib.auth import authenticate, login, logout
@@ -21,19 +21,42 @@ def posts_home(request):
     }
     return render(request, 'index.html', context)
 
-class PostUpdateView(UpdateView):
+@login_required(login_url='/login/')
+def update_view(request, pk):
+    instance = Post.objects.get(pk=pk)
+    form = PostUpdateForm(request.POST or None, request.FILES or None, instance=instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.author = request.user
+        instance.save()
+        return redirect(instance)
+    return render(request, 'update.html', { "form" : form })
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
     model = Post
-    #form_class = PostUpdateForm
     template_name = "update.html"
-    fields = "__all__"
+    fields = ["category","image", "title", "body"]
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 class PostDetailView(LoginRequiredMixin, DetailView):
     login_url = '/login/'
-    redirect_field_name = 'redirect_to'
+    redirect_field_name = 'next'
     model = Post
     template_name = 'detail.html'
     context_object_name = 'post'
+
+def delete_view(request, pk):
+    post = Post.objects.get(pk=pk)
+    if request.method == "POST":
+        post.delete()
+        redirect("/")
+    return render(request, 'comfirm.html', { "post": post})
+
 
 def category_view(request):
     posts = Post.objects.all().order_by("-created_at")
@@ -70,5 +93,7 @@ def login_view(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            return redirect("/")
+            redirect_to = request.POST.get("next",request.GET.get("next", '/'))
+            print(redirect_to)
+            return redirect(redirect_to)
     return render(request, "login.html", { "form": form, "error": error })

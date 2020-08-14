@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.shortcuts import reverse
 from ckeditor.fields import RichTextField
+
+from core.utils import generate_slug
 # Create your models here.
 
 class Post(models.Model):
@@ -14,6 +17,7 @@ class Post(models.Model):
         ('database', 'Database')
     )
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    slug = models.SlugField(unique=True, max_length=255)
     category = models.CharField(choices=CATEGORIES, max_length=12)
     image = models.ImageField()
     title = models.CharField(max_length=255)
@@ -31,3 +35,7 @@ class Post(models.Model):
     @staticmethod
     def get_hot_post():
         return Post.objects.all()[:3]
+
+    def save(self, *args, **kwargs):
+        generate_slug(self)
+        return super().save(*args, **kwargs)
