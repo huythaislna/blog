@@ -12,30 +12,28 @@ from django.contrib.auth.decorators import login_required
 
 #@login_required(login_url='/login/')
 def posts_home(request):
-    hot_posts = Post.get_hot_post()
     posts = Post.objects.all()
     recent_posts = posts[:4]
     context = { 
-        "hot_posts" : hot_posts,
         'recent_posts': recent_posts,
     }
     return render(request, 'index.html', context)
 
 @login_required(login_url='/login/')
-def update_view(request, pk):
-    instance = Post.objects.get(pk=pk)
+def update_view(request, slug):
+    instance = Post.objects.get(slug=slug)
     form = PostUpdateForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.author = request.user
         instance.save()
         return redirect(instance)
-    return render(request, 'update.html', { "form" : form })
+    return render(request, 'create.html', { "form" : form })
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     model = Post
-    template_name = "update.html"
+    template_name = "create.html"
     fields = ["category","image", "title", "body"]
 
     def form_valid(self, form):
@@ -49,6 +47,7 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'detail.html'
     context_object_name = 'post'
+
 
 def delete_view(request, pk):
     post = Post.objects.get(pk=pk)

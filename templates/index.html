@@ -1,60 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block hot_posts %}
-<!-- SECTION -->
-<div class="section">
-	<!-- container -->
-	<div class="container">
-		<!-- row -->
-		<div id="hot-post" class="row hot-post">
-			{% for post in hot_posts %}
-			{% if forloop.first %}
-			<div class="col-md-8 hot-post-left">
-				<!-- post -->
-				<div class="post post-thumb">
-					<a class="post-img" href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" alt=""></a>
-					<div class="post-body">
-						<div class="post-category">
-							<a href="category.html">{{ post.category }}</a>
-						</div>
-						<h3 class="post-title title-lg"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-						<ul class="post-meta">
-							<li><a href="author.html">{{ post.author.username }}</a></li>
-							<li>{{ post.created_at }}</li>
-						</ul>
-					</div>
-				</div>
-				<!-- /post -->
-			</div>
-			{% else %}
-			<div class="col-md-4 hot-post-right">
-				<!-- post -->
-				<div class="post post-thumb">
-					<a class="post-img" href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" alt=""></a>
-					<div class="post-body">
-						<div class="post-category">
-							<a href="category.html">{{ post.category }}</a>
-						</div>
-						<h3 class="post-title title-lg"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-						<ul class="post-meta">
-							<li><a href="author.html">{{ post.author.username }}</a></li>
-							<li>{{ post.created_at }}</li>
-						</ul>
-					</div>
-				</div>
-				<!-- /post -->
-			</div>
-			{% endif %}
-			{% endfor %}
-		</div>
-		<!-- /row -->
-	</div>
-	<!-- /container -->
-</div>
-<!-- /SECTION -->
-{% endblock %}
-
 {% block content %}
 <div class="col-md-8">
 	<!-- row -->

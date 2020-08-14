@@ -30,11 +30,7 @@ class Post(models.Model):
 
     
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={ "pk" : self.pk})
-
-    @staticmethod
-    def get_hot_post():
-        return Post.objects.all()[:3]
+        return reverse('post-detail', kwargs={ "slug" : self.slug})
 
     def save(self, *args, **kwargs):
         generate_slug(self)

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from ckeditor.widgets import CKEditorWidget
 
 from posts.models import Post
 
@@ -27,6 +28,7 @@ class UserRegisterForm(forms.ModelForm):
 
 
 class PostUpdateForm(forms.ModelForm):
+    body = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = Post
         exclude = ["author", "slug"]
