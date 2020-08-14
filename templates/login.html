@@ -136,7 +136,7 @@
 
     <div class="login-page">
         <div class="form">
-            <form class="register-form" method="POST" action="/register/">
+            <form class="register-form" method="POST" action="">
                 {% csrf_token %}
                 {% for field in form %}
                 {{ field }}
@@ -147,7 +147,7 @@
                 <button>create</button>
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
-            <form class="login-form" method="POST" action=".">
+            <form class="login-form" method="POST" action="">
                 {% if error %}
                 <div class="alert alert-danger" role="alert" style="font-size: small;">
                     {{ error }}
