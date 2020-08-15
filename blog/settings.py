@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'st-%70=^7-vo2!ed1fha1l*=jm@c#yvu4rqz+%s#5x_k=j696-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'django_extensions',
+    'cloudinary_storage',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -100,8 +102,8 @@ DATABASES = {
     }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -146,7 +148,7 @@ STATIC_ROOT= BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+#MEDIA_ROOT = BASE_DIR / 'media'
 
 ALLOWED_HOSTS = ['*']
 
@@ -168,4 +170,14 @@ REST_FRAMEWORK = {
 }
 
 SITE_ID = 1
+
 #REST_USE_JWT = True
+
+#add config 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME':'tides',
+    'API_KEY':'877924392712836',
+    'API_SECRET':'s81erqKxAUD_lUgRp6OcoW-sL9g'
+}
