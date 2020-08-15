@@ -22,6 +22,9 @@ psycopg2 = "*"
 dj-database-url = "*"
 cd = "*"
 six = "*"
+pip = "*"
+install = "*"
+dj3-cloudinary-storage = "*"
 
 [requires]
 python_version = "3.8"
