@@ -177,7 +177,7 @@ SITE_ID = 1
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME':'tides',
-    'API_KEY':'877924392712836',
-    'API_SECRET':'s81erqKxAUD_lUgRp6OcoW-sL9g'
+    'CLOUD_NAME': os.environ.get("CLOUD_NAME"),
+    'API_KEY': os.environ.get("API_KEY"),
+    'API_SECRET': os.environ.get('API_SECRET')
 }
