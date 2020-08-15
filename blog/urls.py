@@ -26,10 +26,10 @@ from rest_framework_jwt.views import obtain_jwt_token
 class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
 urlpatterns = [
+    path('', include("posts.urls"), name="posts"),
     path('api-token-auth/', obtain_jwt_token),
     path('rest-auth/facebook/', FacebookLogin.as_view(), name='facebook_login_by_token'),
     path('admin/', admin.site.urls),
-    path('', include("posts.urls")),
     path('api/', include('posts.api.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('rest-auth/', include('rest_auth.urls')),
