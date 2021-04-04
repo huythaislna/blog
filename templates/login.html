@@ -136,15 +136,12 @@
 
     <div class="login-page">
         <div class="form">
-            <form class="register-form" method="POST" action="">
+            <form class="register-form" method="POST" action="/register/">
                 {% csrf_token %}
                 {% for field in form %}
                 {{ field }}
                 {% endfor %}
-                <!-- <input type="text" placeholder="username" />
-                <input type="password" placeholder="password" />
-                <input type="text" placeholder="email address" /> -->
-                <button>create</button>
+                <button type="submit">create</button>
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
             <form class="login-form" method="POST" action="">
@@ -157,8 +154,6 @@
                 {% for field in form %}
                 {{ field }}
                 {% endfor %}
-                <!-- <input type="text" placeholder="username" />
-                <input type="password" placeholder="password" /> -->
                 <button type="submit">login</button>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
                 <p class="message"> <a href="{% provider_login_url "facebook" method="js_sdk" %}">Login by Facebook</a></p>
